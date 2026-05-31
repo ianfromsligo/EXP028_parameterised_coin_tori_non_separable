@@ -131,15 +131,60 @@ Two-phase cancellation & Yes & Yes \\
 
 \section{Conclusion}
 
-Key findings:
+This experiment extends the fixed non-separable coin results of EXP027 to a parameterized framework on both $2 \times 2$ and $4 \times 4$ tori. The key findings, based on verified unitary coin implementations, are as follows:
+
+\subsection{Summary of Results}
+
+\begin{table}[!ht]
+\centering
+\caption{Summary of parameterized coin revivals (fundamental periods)}
+\begin{tabular}{lccc}
+\hline
+\textbf{Torus} & \textbf{Coin Configuration} & \textbf{Period $N$} & \textbf{vs Grover} \\
+\hline
+$2 \times 2$ & Grover (fixed) & 4 & Baseline \\
+$2 \times 2$ & $\phi_R = \pi/2$ & 8 & Slower (2x) \\
+$2 \times 2$ & Biased (R,L only) & 4 & Same \\
+\hline
+$4 \times 4$ & Grover (fixed) & 12 & Baseline \\
+$4 \times 4$ & $\phi_R = \pi/2$ & 24 & Slower (2x) \\
+$4 \times 4$ & Biased (R,L only) & 8 & \textbf{Faster (1.5x)} \\
+$4 \times 4$ & Biased (R,L) + $\phi_R = \pi/2$ & 4 & \textbf{Faster (3x)} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{What the Parameterized Coin Achieves}
+
 \begin{enumerate}
-    \item $2 \times 2$ torus: $\phi_R = \pi/2$ shifts period from 4 to 8
-    \item $4 \times 4$ torus: $\phi_R = \pi/2$ shifts period from 12 to 24
-    \item Two-phase cancellation works on both tori
-    \item Phase sensitivity is extreme on $2 \times 2$, moderate on $4 \times 4$
+    \item \textbf{On $2 \times 2$ torus:} No improvement over Grover. The fastest revival remains period 4.
+    
+    \item \textbf{On $4 \times 4$ torus:} A modest advantage exists. The biased Right/Left only coin revives at period 8, which is faster than Grover's period 12. Adding a $\pi/2$ phase to this biased coin further accelerates revival to period 4 – a \textbf{3x speedup} compared to the standard Grover coin.
+    
+    \item \textbf{Phase sensitivity:} The $2 \times 2$ torus revives only at $\phi_R = 0$ and $2\pi$. The $4 \times 4$ torus revives at $\phi_R = 0, \pi/2, \pi, 3\pi/2, 2\pi$, with periods alternating between 12 and 24.
+    
+    \item \textbf{Two-phase cancellation:} Adding phases to both Right and Up ($\phi_R = \phi_U = \pi/2$) cancels the phase effect on both tori, restoring the original Grover period.
 \end{enumerate}
 
-\section*{Code Availability}
+\subsection{What the Parameterized Coin Does NOT Do}
+
+\begin{itemize}
+    \item \textbf{Does not create new revival periods} on any torus (only shifts existing fundamental periods)
+    \item \textbf{Does not produce revivals on new torus sizes} ($3 \times 3$, $3 \times 4$, $5 \times 5$, etc. remain without revivals)
+    \item \textbf{Does not produce 11 revival periods} on $4 \times 4$ – that result was an artifact of non-unitary coin implementations and has been corrected
+\end{itemize}
+
+\subsection{Honest Assessment}
+
+The parameterized non-separable coin framework offers a \textbf{small, targeted advantage}: on the $4 \times 4$ torus, a biased Right/Left only coin with a $\pi/2$ phase achieves revival every 4 steps – three times faster than the standard Grover coin (period 12).
+
+However, this advantage does not extend to other torus sizes. The $2 \times 2$ torus is already optimal with the fixed Grover coin, and larger tori ($3 \times 3$, $3 \times 4$, etc.) show no revivals regardless of parameterization.
+
+\subsection{Final Remarks}
+
+The parameterized coin framework successfully generalizes EXP027's fixed coins, allowing tunable revival periods on the $4 \times 4$ torus. The fastest revival discovered (period 4) represents a meaningful but modest improvement over the baseline Grover coin. This provides a tunable framework for Objective 4, though the scope of improvement is limited to small tori.
+
+\subsection*{Code Availability}
 \url{https://github.com/ianfromsligo/EXP028_parameterised_coin_tori_non_separable}
 
 \end{document}
